@@ -1,3 +1,4 @@
 <?php
-	$app = Bullet::instance();
-?>
+if (true) {
+    echo 'hret';
+}
