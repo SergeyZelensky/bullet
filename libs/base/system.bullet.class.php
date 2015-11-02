@@ -1,10 +1,16 @@
 <?php
-class Bullet {
+class Bullet extends Registry {
 	public static function instance($configuration) {
-		foreach ($$configuration as $module => $moduleSettings) {
+		foreach ($configuration as $module => $moduleSettings) {
 			if (!class_exists($module, false)) {
-				Register::setUnit($module, new $module);
+				self::setUnit($module, new $module($moduleSettings));
 			}
 		}
+	}
+	public static function run($service) {
+		return self::$Collection[$service];
+	}
+	public static function db() {
+		return self::$Collection['database']->db;
 	}
 }
