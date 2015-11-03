@@ -8,18 +8,29 @@ class router {
 		while (!feof($fd)) {
 			$this->rules[] = unserialize(fgets($fd));
 		}
-
 	}
 	public function tree() {
 		$seat = trim($_SERVER['REQUEST_URI'], '/');
-		print_r($this->rules[array_search($seat, $this->rules)]);
-		///print_r($this->rules);
+
+		$this->searchAlias($seat);
 
 	}
-	public function addAlias($controller, $action, $alias) {
-		$new = [$action => ['action' => $action, 'controller' => $controller, 'alias' => $alias]];
+	public function addAlias($controller, $action, $alias, $id) {
+		$new = ['alias' => $alias, 'action' => $action, 'controller' => $controller, 'id' => $id];
 		$fd = fopen($this->Path, 'a');
 		fwrite($fd, serialize($new) . "\n");
 
+	}
+	private function searchAlias($alias) {
+		if (!empty($this->rules)) {
+			$start = microtime(true);
+			foreach ($this->rules as $rule) {
+				if ($alias == $rule['alias']) {
+					return $rule;
+					break;
+				}
+			}
+			echo "время выполнения скрипта: " . round((microtime(true) - $start), 3) . "\n";
+		}
 	}
 }
