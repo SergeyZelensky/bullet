@@ -1,12 +1,13 @@
 <?php
 return [
+	'memcache' => [],
 	'database' => [
 		'dbname' => 'oookron',
 		'user' => 'root',
 		'password' => '',
 		'charset' => 'utf8',
+		'initMethod' => 1,
 	],
-	'router' => [
-		'rules' => CNF . 'rules.dat',
-	],
+	'orm' => [],
+	'router' => [],
 ];
